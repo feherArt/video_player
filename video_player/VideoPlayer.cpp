@@ -52,6 +52,7 @@ cv::Mat VideoPlayer::get_random_image(size_t random_min, size_t random_max)
 
 std::vector<cv::Mat> VideoPlayer::get_specific_part_of_video(size_t video_to_use, size_t starting_frame, size_t number_of_frames_to_use)
 {
+
     std::vector<cv::Mat> frames;
     std::shared_ptr<cv::VideoCapture> video = m_video_array.get_video(video_to_use);
 
@@ -63,6 +64,31 @@ std::vector<cv::Mat> VideoPlayer::get_specific_part_of_video(size_t video_to_use
     video->set(cv::CAP_PROP_POS_FRAMES, starting_frame);
 
     for (size_t i = 0; i < number_of_frames_to_use; ++i)
+    {
+        cv::Mat frame;
+        if (!video->read(frame) || frame.empty()) {
+            std::cerr << "Error: Could not read frame " << (starting_frame + i) << " from video " << video_to_use << std::endl;
+            break;
+        }
+        frames.push_back(frame);
+    }
+    return frames;
+}
+
+std::vector<cv::Mat> VideoPlayer::get_specific_part_backwards(size_t video_to_use, size_t starting_frame, size_t number_of_frames_to_use)
+{
+
+    std::vector<cv::Mat> frames;
+    std::shared_ptr<cv::VideoCapture> video = m_video_array.get_video(video_to_use);
+
+    if (!video->isOpened()) {
+        std::cerr << "Error: Could not open video " << video_to_use << std::endl;
+        return frames;
+    }
+
+    video->set(cv::CAP_PROP_POS_FRAMES, starting_frame);
+
+    for (size_t i = starting_frame; i < starting_frame - number_of_frames_to_use; --i)
     {
         cv::Mat frame;
         if (!video->read(frame) || frame.empty()) {

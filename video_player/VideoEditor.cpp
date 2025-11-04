@@ -9,7 +9,7 @@ std::vector<std::vector<cv::Mat>> VideoEditor::total_random_editing(size_t lengh
 
 	for (size_t i{}; i < number_of_cuts; ++i)
 	{
-		size_t video_to_use{ m_random_generator.get_random_size_t(0, m_number_of_videos - 1) };
+		size_t video_to_use{ m_random_generator.get_random_size_t(0, m_number_of_videos - 1)};
 		size_t lenght_of_cut{ m_random_generator.get_random_size_t(1, remaining_lenght) };
 		size_t starting_frame{ m_random_generator.get_random_size_t(0, (m_video_player.get_video_array().get_frame_count(video_to_use) - lenght_of_cut)) };
 		remaining_lenght -= lenght_of_cut;

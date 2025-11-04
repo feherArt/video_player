@@ -22,6 +22,7 @@ public:
 	cv::Mat get_random_image(size_t random_min, size_t random_max);
 	std::vector<cv::Mat> get_specific_part_of_video(size_t video_to_use, size_t starting_frame, size_t number_of_frames_to_use);
 	const VideoArray& get_video_array() const { return m_video_array; }
+	std::vector<cv::Mat> get_specific_part_backwards(size_t video_to_use, size_t starting_frame, size_t number_of_frames_to_use);
 
 private:
 
